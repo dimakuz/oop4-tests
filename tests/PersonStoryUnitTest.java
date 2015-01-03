@@ -31,27 +31,17 @@ public class PersonStoryUnitTest {
 			Assert.assertEquals("this", "that");
 		}
 		
-		@Then("a string assertion &fails")
-		public void stringsNotEqual(String param) {
-			Assert.assertEquals("this", "that");
-		}
-		
-		@Then("an integer assertion &fails")
-		public void integersNotEqual(String param) {
-			Assert.assertEquals(1, 2);
-		}
-		
 		public static class Static {
 			public static class _Static extends PersonStoryDDerivedTest {
 				@Given("static static of &age")
-				public void SS(int age) {
+				public void SS(Integer age) {
 					this.aPerson(age);
 				}
 			}
 			
 			public class _NonStatic extends PersonStoryDDerivedTest {
 				@Given("static non-static of &age")
-				public void SnS(int age) {
+				public void SnS(Integer age) {
 					this.aPerson(age);
 				}
 			}
@@ -60,7 +50,7 @@ public class PersonStoryUnitTest {
 		public class NonStatic {
 			public class _NonStatic extends PersonStoryDDerivedTest {
 				@Given("non-static non-static of &age")
-				public void nSnS(int age) {
+				public void nSnS(Integer age) {
 					this.aPerson(age);
 				}
 			}
@@ -70,7 +60,7 @@ public class PersonStoryUnitTest {
 		private class PrivateNonStatic {
 			public class _NonStatic extends PersonStoryDDerivedTest {
 				@Given("private non-static non-static of &age")
-				private void pnSnS(int age) {
+				private void pnSnS(Integer age) {
 					this.aPerson(age);
 				}
 			}
@@ -80,7 +70,7 @@ public class PersonStoryUnitTest {
 		private static class PrivateStatic {
 			public class _NonStatic extends PersonStoryDDerivedTest {
 				@Given("private static static of &age")
-				private void pSS(int age) {
+				private void pSS(Integer age) {
 					this.aPerson(age);
 				}
 			}
@@ -184,30 +174,6 @@ public class PersonStoryUnitTest {
 	public void testUnexpectedType() throws Exception {
 		String story = this.join(given10, "When a person does something with an unexpected type", fine);
 		new StoryTesterImpl().testOnHirarchy(story, PersonStoryDDerivedTest.class);
-	}
-
-	@Test(expected=StoryTestException.class)
-	public void testStringAssertFails() throws Exception {
-		String story = this.join(given10, celebrates10, "Then a string assertion fails");
-		try {
-			new StoryTesterImpl().testOnHirarchy(story, PersonStoryDDerivedTest.class);
-		} catch (StoryTestException e) {
-			Assert.assertEquals(e.getStoryExpected(), "this");
-			Assert.assertEquals(e.getTestResult(), "that");
-			throw e;
-		}
-	}
-
-	@Test(expected=StoryTestException.class)
-	public void testIntegerAssertFails() throws Exception {
-		String story = this.join(given10, celebrates10, "Then an integer assertion fails");
-		try {
-			new StoryTesterImpl().testOnHirarchy(story, PersonStoryDDerivedTest.class);
-		} catch (StoryTestException e) {
-			Assert.assertEquals(e.getStoryExpected(), "1");
-			Assert.assertEquals(e.getTestResult(), "2");
-			throw e;
-		}
 	}
 	
 	@Test
